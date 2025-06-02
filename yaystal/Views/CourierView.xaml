@@ -1,0 +1,112 @@
+<Page x:Class="yaystal.Views.CourierView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:yaystal.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="CourierView">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Рабочее место курьера" Style="{StaticResource HeaderTextStyle}" Grid.Row="0"/>
+
+        <!-- Основное содержимое -->
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая панель - списки заказов -->
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Список активных заказов -->
+                <TextBlock Text="Активные заказы" Style="{StaticResource SubHeaderTextStyle}" Grid.Row="0"/>
+                
+                <Border Grid.Row="1" Background="White" CornerRadius="5" Padding="10">
+                    <ListView x:Name="lvActiveOrders" SelectionChanged="lvActiveOrders_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                                <GridViewColumn Header="Адрес" DisplayMemberBinding="{Binding DeliveryAddress}" Width="150"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+
+                <!-- Кнопка "Взять заказ" -->
+                <Button x:Name="btnTakeOrder" Grid.Row="2" Content="Взять заказ" Style="{StaticResource StandardButtonStyle}" 
+                        Margin="0,10,0,10" IsEnabled="False" Click="btnTakeOrder_Click"/>
+
+                <!-- Список взятых заказов -->
+                <TextBlock Text="Взятые заказы" Style="{StaticResource SubHeaderTextStyle}" Grid.Row="3"/>
+                
+                <Border Grid.Row="4" Background="White" CornerRadius="5" Padding="10">
+                    <ListView x:Name="lvTakenOrders">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                                <GridViewColumn Header="Адрес" DisplayMemberBinding="{Binding DeliveryAddress}" Width="150"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+            </Grid>
+
+            <!-- Правая панель - карта и управление маршрутом -->
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Карта -->
+                <Border Grid.Row="0" Background="White" CornerRadius="5" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Карта" Style="{StaticResource SubHeaderTextStyle}" Grid.Row="0"/>
+                        
+                        <Border Grid.Row="1" BorderBrush="#DDDDDD" BorderThickness="1" Margin="0,10,0,0">
+                            <Canvas x:Name="mapCanvas" Background="#F5F5F5">
+                                <!-- Здесь будут отображаться элементы карты -->
+                            </Canvas>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- Время маршрута -->
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,10,0,10">
+                    <TextBlock Text="Время маршрута:" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="txtRouteTime" Text="0 мин" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Кнопки управления маршрутом -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                    <Button x:Name="btnStartRoute" Content="Начать маршрут" Style="{StaticResource StandardButtonStyle}" 
+                            Margin="0,0,10,0" IsEnabled="False" Click="btnStartRoute_Click"/>
+                    <Button x:Name="btnPayOrder" Content="Оплатить заказ" Style="{StaticResource StandardButtonStyle}" 
+                            IsEnabled="False" Click="btnPayOrder_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,146 @@
+<Page x:Class="yaystal.Views.OrderView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:yaystal.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="950"
+      Title="OrderView">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Оформление заказа" Style="{StaticResource HeaderTextStyle}" Grid.Row="0"/>
+
+        <!-- Основное содержимое -->
+        <Grid Grid.Row="1" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Левая панель - список блюд -->
+            <Border Grid.Column="0" Background="White" CornerRadius="5" Margin="0,0,10,0" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Меню блюд" Style="{StaticResource SubHeaderTextStyle}" Grid.Row="0"/>
+                    
+                    <ListView x:Name="lvDishes" Grid.Row="1" Margin="0,10,0,0" 
+                              MouseDoubleClick="lvDishes_MouseDoubleClick">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="150"/>
+                                <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                                <GridViewColumn Header="Вес (г)" DisplayMemberBinding="{Binding Weight}" Width="70"/>
+                                <GridViewColumn Header="Цена (₽)" DisplayMemberBinding="{Binding Price}" Width="70"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </Border>
+
+            <!-- Правая панель - детали заказа -->
+            <Border Grid.Column="1" Background="White" CornerRadius="5" Margin="10,0,0,0" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Ваш заказ" Style="{StaticResource SubHeaderTextStyle}" Grid.Row="0"/>
+                    
+                    <ListView x:Name="lvOrderItems" Grid.Row="1" Margin="0,10,0,0" Height="150">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Dish.Name}" Width="150"/>
+                                <GridViewColumn Header="Цена (₽)" DisplayMemberBinding="{Binding Dish.Price}" Width="70"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <Button Content="Удалить выбранное блюдо" Grid.Row="2" Margin="0,10,0,0" 
+                            Style="{StaticResource StandardButtonStyle}" Click="btnRemoveItem_Click"/>
+
+                    <!-- Тип заказа -->
+                    <StackPanel Grid.Row="3" Margin="0,20,0,0">
+                        <TextBlock Text="Тип заказа:" FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <RadioButton x:Name="rbDelivery" Content="Доставка" Margin="0,0,20,0" 
+                                         Checked="rbDelivery_Checked"/>
+                            <RadioButton x:Name="rbPickup" Content="Самовывоз" IsChecked="True" 
+                                         Checked="rbPickup_Checked"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Адрес доставки (видимый только при выборе доставки) -->
+                    <StackPanel x:Name="spDeliveryAddress" Grid.Row="4" Margin="0,10,0,0" Visibility="Collapsed">
+                        <TextBlock Text="Адрес доставки:" FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                            <RadioButton x:Name="rbSelfAddress" Content="Себе" Margin="0,0,20,0" IsChecked="True"
+                                         Checked="rbSelfAddress_Checked"/>
+                            <RadioButton x:Name="rbOtherAddress" Content="Другому" 
+                                         Checked="rbOtherAddress_Checked"/>
+                        </StackPanel>
+                        
+                        <!-- Поля для ввода адреса (видимые только при выборе "Другому") -->
+                        <StackPanel x:Name="spAddressFields" Margin="0,10,0,0" Visibility="Collapsed">
+                            <TextBlock Text="Улица:"/>
+                            <TextBox x:Name="txtStreet" Margin="0,5,0,0"/>
+                            <TextBlock Text="Дом:" Margin="0,10,0,0"/>
+                            <TextBox x:Name="txtHouse" Margin="0,5,0,0"/>
+                            <TextBlock Text="Квартира:" Margin="0,10,0,0"/>
+                            <TextBox x:Name="txtApartment" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Итоговая стоимость -->
+                    <StackPanel Grid.Row="5" Margin="0,20,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="Стоимость заказа:" Grid.Row="0" Grid.Column="0"/>
+                            <TextBlock x:Name="txtOrderPrice" Text="0 ₽" Grid.Row="0" Grid.Column="1"/>
+
+                            <TextBlock Text="Стоимость доставки:" Grid.Row="1" Grid.Column="0" Margin="0,5,0,0"/>
+                            <TextBlock x:Name="txtDeliveryPrice" Text="0 ₽" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0"/>
+
+                            <TextBlock Text="Итоговая сумма:" Grid.Row="2" Grid.Column="0" Margin="0,5,0,0" FontWeight="Bold"/>
+                            <TextBlock x:Name="txtTotalPrice" Text="0 ₽" Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" FontWeight="Bold"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Кнопки внизу -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Очистить заказ" Style="{StaticResource StandardButtonStyle}" Margin="0,0,10,0"
+                    Click="btnClearOrder_Click"/>
+            <Button Content="Оформить заказ" Style="{StaticResource StandardButtonStyle}" 
+                    Click="btnPlaceOrder_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,48 @@
+<Window x:Class="yaystal.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:yaystal"
+        xmlns:views="clr-namespace:yaystal.Views"
+        mc:Ignorable="d"
+        Title="Система управления рестораном" Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#2E3A47">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                    <TextBlock Text="Ресторан" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" />
+                    <TextBlock Text="Система управления" FontSize="16" Foreground="LightGray" HorizontalAlignment="Center" Margin="0,5,0,0" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="0,20,0,0">
+                    <TextBlock Text="Персонал" FontSize="18" FontWeight="SemiBold" Foreground="#ADBFD0" Margin="15,0,0,10" />
+                    <Button x:Name="btnCook" Content="Повар" Style="{StaticResource SidebarButtonStyle}" Click="btnCook_Click" />
+                    <Button x:Name="btnCourier" Content="Курьер" Style="{StaticResource SidebarButtonStyle}" Click="btnCourier_Click" />
+                    <Button x:Name="btnWaiter" Content="Официант" Style="{StaticResource SidebarButtonStyle}" Click="btnWaiter_Click" />
+                    <Button x:Name="btnAdmin" Content="Администратор" Style="{StaticResource SidebarButtonStyle}" Click="btnAdmin_Click" />
+                    
+                    <TextBlock Text="Клиент" FontSize="18" FontWeight="SemiBold" Foreground="#ADBFD0" Margin="15,20,0,10" />
+                    <Button x:Name="btnOrder" Content="Оформление заказа" Style="{StaticResource SidebarButtonStyle}" Click="btnOrder_Click" />
+                    <Button x:Name="btnProfile" Content="Профиль" Style="{StaticResource SidebarButtonStyle}" Click="btnProfile_Click" />
+                    <Button x:Name="btnOrderHistory" Content="История заказов" Style="{StaticResource SidebarButtonStyle}" Click="btnOrderHistory_Click" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Background="#F5F5F5">
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+        </Border>
+    </Grid>
+</Window>

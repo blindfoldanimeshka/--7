@@ -1,0 +1,48 @@
+<Window x:Class="yaystal.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:yaystal"
+        mc:Ignorable="d"
+        Title="Вход в систему" Height="450" Width="400"
+        WindowStartupLocation="CenterScreen">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Вход в систему" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.Row="0"/>
+        
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <RadioButton x:Name="rbEmployee" Content="Сотрудник" Margin="0,0,20,0" IsChecked="True" GroupName="UserType"/>
+            <RadioButton x:Name="rbClient" Content="Клиент" GroupName="UserType"/>
+        </StackPanel>
+        
+        <Grid Grid.Row="2">
+            <StackPanel x:Name="panelEmployee" Visibility="Visible">
+                <TextBlock Text="Логин:" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtEmployeeLogin" Margin="0,0,0,15"/>
+                
+                <TextBlock Text="Пароль:" Margin="0,0,0,5"/>
+                <PasswordBox x:Name="txtEmployeePassword" Margin="0,0,0,15"/>
+            </StackPanel>
+            
+            <StackPanel x:Name="panelClient" Visibility="Collapsed">
+                <TextBlock Text="Номер телефона:" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtClientPhone" Margin="0,0,0,15" TextChanged="TxtClientPhone_TextChanged"/>
+                
+                <Button x:Name="btnSendCode" Content="Прислать уведомление с кодом" Margin="0,0,0,15"/>
+                
+                <TextBlock Text="Код из уведомления:" Margin="0,0,0,5"/>
+                <TextBox x:Name="txtClientCode" Margin="0,0,0,15" PreviewTextInput="TxtClientCode_PreviewTextInput"/>
+            </StackPanel>
+        </Grid>
+        
+        <Button x:Name="btnLogin" Content="Войти" Grid.Row="3" Margin="0,0,0,10" Height="30"/>
+    </Grid>
+</Window>
